@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB6C0912273BEF87009791BC /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6C0911273BEF87009791BC /* UIImage+Extension.swift */; };
 		CBEB31A7273A82C70031A02D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31A6273A82C70031A02D /* AppDelegate.swift */; };
 		CBEB31A9273A82C70031A02D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31A8273A82C70031A02D /* SceneDelegate.swift */; };
 		CBEB31AB273A82C70031A02D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31AA273A82C70031A02D /* ViewController.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CB6C0911273BEF87009791BC /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		CBEB31A3273A82C70031A02D /* SampleImageEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleImageEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBEB31A6273A82C70031A02D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBEB31A8273A82C70031A02D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +51,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB6C0913273BEF90009791BC /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				CB6C0911273BEF87009791BC /* UIImage+Extension.swift */,
+			);
+			path = extension;
+			sourceTree = "<group>";
+		};
 		CBEB319A273A82C70031A02D = {
 			isa = PBXGroup;
 			children = (
@@ -68,6 +78,7 @@
 		CBEB31A5273A82C70031A02D /* SampleImageEditor */ = {
 			isa = PBXGroup;
 			children = (
+				CB6C0913273BEF90009791BC /* extension */,
 				CBEB31C3273A9E1F0031A02D /* Images */,
 				CBEB31C6273A9F490031A02D /* CropView */,
 				CBEB31A6273A82C70031A02D /* AppDelegate.swift */,
@@ -176,6 +187,7 @@
 				CBEB31AB273A82C70031A02D /* ViewController.swift in Sources */,
 				CBEB31A7273A82C70031A02D /* AppDelegate.swift in Sources */,
 				CBEB31B1273A82C70031A02D /* SampleImageEditor.xcdatamodeld in Sources */,
+				CB6C0912273BEF87009791BC /* UIImage+Extension.swift in Sources */,
 				CBEB31C2273A9E030031A02D /* CropView.swift in Sources */,
 				CBEB31BF273A9D530031A02D /* CropRectView.swift in Sources */,
 				CBEB31A9273A82C70031A02D /* SceneDelegate.swift in Sources */,
