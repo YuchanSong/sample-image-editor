@@ -48,7 +48,12 @@ extension ViewController : UIImagePickerControllerDelegate, UINavigationControll
 
 //MARK: - CropViewController Delegate
 extension ViewController: CropViewControllerDelegate {
-    func cropViewController(_ controller: CropViewController, didFinishCroppingImage image: UIImage) {
+    func cropViewController(_ vc: CropViewController, didFinishCroppingImage image: UIImage) {
+        vc.navigationController?.popViewController(animated: true)
         self.imageView.image = image
+    }
+    
+    func cropViewControllerDidCancel(_ vc: CropViewController) {
+        vc.navigationController?.popViewController(animated: true)
     }
 }

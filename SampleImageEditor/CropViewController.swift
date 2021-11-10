@@ -8,7 +8,8 @@
 import UIKit
 
 protocol CropViewControllerDelegate {
-    func cropViewController(_ controller: CropViewController, didFinishCroppingImage image: UIImage)
+    func cropViewController(_ vc: CropViewController, didFinishCroppingImage image: UIImage)
+    func cropViewControllerDidCancel(_ vc: CropViewController)
 }
 
 class CropViewController: UIViewController {
@@ -56,12 +57,10 @@ class CropViewController: UIViewController {
     }
     
     @objc func cancel(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
+        delegate?.cropViewControllerDidCancel(self)
     }
     
     @objc func done(_ sender: UIBarButtonItem) {
-        self.navigationController?.popViewController(animated: true)
-        
         if let image = cropView.croppedImage {
             delegate?.cropViewController(self, didFinishCroppingImage: image)
         } else {
