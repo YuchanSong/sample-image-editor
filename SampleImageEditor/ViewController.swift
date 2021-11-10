@@ -23,12 +23,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction func cropAction(_ sender: Any) {
-        let controller = CropViewController()
-//        controller.delegate = self
-        controller.modalPresentationStyle = .fullScreen
-        controller.image = self.imageView.image
-        
-        self.present(controller, animated: true, completion: nil)
+        if let i = self.imageView.image {
+            let controller = CropViewController(delegate: self, image: i)
+            self.present(controller, animated: true, completion: nil)
+        } else {
+            // 이미지가 업서여..
+        }
     }
     
     @IBAction func flipAction(_ sender: Any) {
@@ -81,5 +81,19 @@ extension UIImage {
         let rotatedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return rotatedImage!
+    }
+}
+
+extension ViewController: CropViewControllerDelegate {
+    func cropViewController(_ controller: CropViewController, didFinishCroppingImage image: UIImage) {
+        // TODO
+    }
+    
+    func cropViewController(_ controller: CropViewController, didFinishCroppingImage image: UIImage, transform: CGAffineTransform, cropRect: CGRect) {
+        // TODO
+    }
+    
+    func cropViewControllerDidCancel(_ controller: CropViewController) {
+        // TODO
     }
 }

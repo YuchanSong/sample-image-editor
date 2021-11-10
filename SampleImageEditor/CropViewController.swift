@@ -7,14 +7,14 @@
 
 import UIKit
 
-protocol CropViewControllerDelegate: AnyObject {
+protocol CropViewControllerDelegate {
     func cropViewController(_ controller: CropViewController, didFinishCroppingImage image: UIImage)
     func cropViewController(_ controller: CropViewController, didFinishCroppingImage image: UIImage, transform: CGAffineTransform, cropRect: CGRect)
     func cropViewControllerDidCancel(_ controller: CropViewController)
 }
 
 class CropViewController: UIViewController {
-    open weak var delegate: CropViewControllerDelegate?
+    private var delegate: CropViewControllerDelegate?
     fileprivate var cropView: CropView?
     
     open var image: UIImage? {
@@ -23,10 +23,25 @@ class CropViewController: UIViewController {
         }
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public init(delegate vc: CropViewControllerDelegate, image: UIImage, style: UIModalPresentationStyle = .fullScreen) {
+        super.init(nibName: nil, bundle: nil)
+        self.delegate = vc
+        self.image = image
+        self.modalPresentationStyle = style
+    }
+    
     open override func loadView() {
-        let contentView = UIView()
-        contentView.autoresizingMask = .flexibleWidth
-        contentView.backgroundColor = UIColor.black
+        let contentView: UIView = {
+            let v = UIView()
+            v.autoresizingMask = .flexibleWidth
+            v.backgroundColor = UIColor.black
+            return v
+        }()
+        
         view = contentView
         
         // Add CropView
