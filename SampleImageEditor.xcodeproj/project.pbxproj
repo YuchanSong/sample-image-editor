@@ -14,6 +14,11 @@
 		CBEB31B1273A82C70031A02D /* SampleImageEditor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31AF273A82C70031A02D /* SampleImageEditor.xcdatamodeld */; };
 		CBEB31B3273A82CA0031A02D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBEB31B2273A82CA0031A02D /* Assets.xcassets */; };
 		CBEB31B6273A82CA0031A02D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBEB31B4273A82CA0031A02D /* LaunchScreen.storyboard */; };
+		CBEB31BF273A9D530031A02D /* CropRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31BD273A9D530031A02D /* CropRectView.swift */; };
+		CBEB31C0273A9D530031A02D /* ResizeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31BE273A9D530031A02D /* ResizeControl.swift */; };
+		CBEB31C2273A9E030031A02D /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31C1273A9E030031A02D /* CropView.swift */; };
+		CBEB31C5273A9E2B0031A02D /* PhotoCropEditorBorder.png in Resources */ = {isa = PBXBuildFile; fileRef = CBEB31C4273A9E2B0031A02D /* PhotoCropEditorBorder.png */; };
+		CBEB31C8273AA1DF0031A02D /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31C7273AA1DF0031A02D /* CropViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +31,11 @@
 		CBEB31B2273A82CA0031A02D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CBEB31B5273A82CA0031A02D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CBEB31B7273A82CA0031A02D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CBEB31BD273A9D530031A02D /* CropRectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropRectView.swift; sourceTree = "<group>"; };
+		CBEB31BE273A9D530031A02D /* ResizeControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizeControl.swift; sourceTree = "<group>"; };
+		CBEB31C1273A9E030031A02D /* CropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropView.swift; sourceTree = "<group>"; };
+		CBEB31C4273A9E2B0031A02D /* PhotoCropEditorBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PhotoCropEditorBorder.png; sourceTree = "<group>"; };
+		CBEB31C7273AA1DF0031A02D /* CropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,9 +68,12 @@
 		CBEB31A5273A82C70031A02D /* SampleImageEditor */ = {
 			isa = PBXGroup;
 			children = (
+				CBEB31C3273A9E1F0031A02D /* Images */,
+				CBEB31C6273A9F490031A02D /* CropView */,
 				CBEB31A6273A82C70031A02D /* AppDelegate.swift */,
 				CBEB31A8273A82C70031A02D /* SceneDelegate.swift */,
 				CBEB31AA273A82C70031A02D /* ViewController.swift */,
+				CBEB31C7273AA1DF0031A02D /* CropViewController.swift */,
 				CBEB31AC273A82C70031A02D /* Main.storyboard */,
 				CBEB31B2273A82CA0031A02D /* Assets.xcassets */,
 				CBEB31B4273A82CA0031A02D /* LaunchScreen.storyboard */,
@@ -68,6 +81,24 @@
 				CBEB31AF273A82C70031A02D /* SampleImageEditor.xcdatamodeld */,
 			);
 			path = SampleImageEditor;
+			sourceTree = "<group>";
+		};
+		CBEB31C3273A9E1F0031A02D /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				CBEB31C4273A9E2B0031A02D /* PhotoCropEditorBorder.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		CBEB31C6273A9F490031A02D /* CropView */ = {
+			isa = PBXGroup;
+			children = (
+				CBEB31C1273A9E030031A02D /* CropView.swift */,
+				CBEB31BD273A9D530031A02D /* CropRectView.swift */,
+				CBEB31BE273A9D530031A02D /* ResizeControl.swift */,
+			);
+			path = CropView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -131,6 +162,7 @@
 				CBEB31B6273A82CA0031A02D /* LaunchScreen.storyboard in Resources */,
 				CBEB31B3273A82CA0031A02D /* Assets.xcassets in Resources */,
 				CBEB31AE273A82C70031A02D /* Main.storyboard in Resources */,
+				CBEB31C5273A9E2B0031A02D /* PhotoCropEditorBorder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,7 +176,11 @@
 				CBEB31AB273A82C70031A02D /* ViewController.swift in Sources */,
 				CBEB31A7273A82C70031A02D /* AppDelegate.swift in Sources */,
 				CBEB31B1273A82C70031A02D /* SampleImageEditor.xcdatamodeld in Sources */,
+				CBEB31C2273A9E030031A02D /* CropView.swift in Sources */,
+				CBEB31BF273A9D530031A02D /* CropRectView.swift in Sources */,
 				CBEB31A9273A82C70031A02D /* SceneDelegate.swift in Sources */,
+				CBEB31C8273AA1DF0031A02D /* CropViewController.swift in Sources */,
+				CBEB31C0273A9D530031A02D /* ResizeControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
