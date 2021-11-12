@@ -429,22 +429,24 @@ class CropView: UIView {
 
 // MARK: - ScrollView delegate methods
 extension CropView: UIScrollViewDelegate {
-    open func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return zoomingView
     }
     
-    open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let contentOffset = scrollView.contentOffset
         targetContentOffset.pointee = contentOffset
     }
 }
 
+// MARK: - ScrollView delegate methods
 extension CropView: UIGestureRecognizerDelegate {
-    open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
 }
 
+// MARK: - CropView delegate methods
 extension CropView: CropRectViewDelegate {
     func cropRectViewDidBeginEditing(_ view: CropRectView) {
         resizing = true
