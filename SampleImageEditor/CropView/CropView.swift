@@ -9,11 +9,11 @@
 import UIKit
 import AVFoundation
 
-open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, CropRectViewDelegate {
-    open var image: UIImage? {
+class CropView: UIView {
+    var image: UIImage? {
         didSet {
-            if image != nil {
-                imageSize = image!.size
+            if let image = image {
+                self.imageSize = image.size
             }
             imageView?.removeFromSuperview()
             imageView = nil
@@ -22,7 +22,8 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
             setNeedsLayout()
         }
     }
-    open var imageView: UIView? {
+    
+    var imageView: UIView? {
         didSet {
             if let view = imageView , image == nil {
                 imageSize = view.frame.size
@@ -31,15 +32,18 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
             setNeedsLayout()
         }
     }
-    open var croppedImage: UIImage? {
+    
+    var croppedImage: UIImage? {
         return image?.rotatedImageWithTransform(rotation, croppedToRect: zoomedCropRect())
     }
-    open var keepAspectRatio = false {
+    
+    var keepAspectRatio = false {
         didSet {
             cropRectView.keepAspectRatio = keepAspectRatio
         }
     }
-    open var cropAspectRatio: CGFloat {
+    
+    var cropAspectRatio: CGFloat {
         set {
             setCropAspectRatio(newValue, shouldCenter: true)
         }
@@ -50,13 +54,15 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
             return width / height
         }
     }
-    open var rotation: CGAffineTransform {
+    
+    var rotation: CGAffineTransform {
         guard let imgView = imageView else {
             return CGAffineTransform.identity
         }
         return imgView.transform
     }
-    open var rotationAngle: CGFloat {
+    
+    var rotationAngle: CGFloat {
         set {
             imageView?.transform = CGAffineTransform(rotationAngle: newValue)
         }
@@ -64,7 +70,8 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
             return atan2(rotation.b, rotation.a)
         }
     }
-    open var cropRect: CGRect {
+    
+    var cropRect: CGRect {
         set {
             zoomToCropRect(newValue)
         }
@@ -72,9 +79,10 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
             return scrollView.frame
         }
     }
-    open var imageCropRect = CGRect.zero {
+    
+    var imageCropRect = CGRect.zero {
         didSet {
-            resetCropRect()
+            resetCropRectAnimated()
             
             let scale = min(scrollView.frame.width / imageSize.width, scrollView.frame.height / imageSize.height)
             let x = imageCropRect.minX * scale + scrollView.frame.minX
@@ -90,34 +98,32 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
             }
         }
     }
-    open var resizeEnabled = true {
+
+    var resizeEnabled = true {
         didSet {
             cropRectView.enableResizing(resizeEnabled)
         }
     }
-    open var showCroppedArea = true {
+    
+    var showCroppedArea = true {
         didSet {
             layoutIfNeeded()
             scrollView.clipsToBounds = !showCroppedArea
-            showOverlayView(showCroppedArea)
         }
     }
-    open var rotationGestureRecognizer: UIRotationGestureRecognizer!
-    fileprivate var imageSize = CGSize(width: 1.0, height: 1.0)
-    fileprivate var scrollView: UIScrollView!
-    fileprivate var zoomingView: UIView?
-    fileprivate let cropRectView = CropRectView()
-    fileprivate let topOverlayView = UIView()
-    fileprivate let leftOverlayView = UIView()
-    fileprivate let rightOverlayView = UIView()
-    fileprivate let bottomOverlayView = UIView()
-    fileprivate var insetRect = CGRect.zero
-    fileprivate var editingRect = CGRect.zero
-    fileprivate var interfaceOrientation = UIApplication.shared.statusBarOrientation
-    fileprivate var resizing = false
-    fileprivate var usingCustomImageView = false
-    fileprivate let MarginTop: CGFloat = 37.0
-    fileprivate let MarginLeft: CGFloat = 20.0
+    
+    var rotationGestureRecognizer: UIRotationGestureRecognizer!
+    var imageSize = CGSize(width: 1.0, height: 1.0)
+    var scrollView: UIScrollView!
+    var zoomingView: UIView?
+    let cropRectView = CropRectView()
+    var insetRect = CGRect.zero
+    var editingRect = CGRect.zero
+    var interfaceOrientation = UIApplication.shared.statusBarOrientation
+    var resizing = false
+    var usingCustomImageView = false
+    let MarginTop: CGFloat = 37.0
+    let MarginLeft: CGFloat = 20.0
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -129,7 +135,7 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
         initialize()
     }
 
-    fileprivate func initialize() {
+    func initialize() {
         autoresizingMask = [.flexibleWidth, .flexibleHeight]
         backgroundColor = UIColor.clear
         
@@ -152,15 +158,9 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
         
         cropRectView.delegate = self
         addSubview(cropRectView)
-        
-        showOverlayView(showCroppedArea)
-        addSubview(topOverlayView)
-        addSubview(leftOverlayView)
-        addSubview(rightOverlayView)
-        addSubview(bottomOverlayView)
     }
     
-    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if !isUserInteractionEnabled {
             return nil
         }
@@ -176,7 +176,7 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
         return super.hitTest(point, with: event)
     }
     
-    open override func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         let interfaceOrientation = UIApplication.shared.statusBarOrientation
         
@@ -223,19 +223,7 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
         self.interfaceOrientation = interfaceOrientation
     }
     
-    open func setRotationAngle(_ rotationAngle: CGFloat, snap: Bool) {
-        var rotation = rotationAngle
-        if snap {
-            rotation = nearbyint(rotationAngle / CGFloat(M_PI_2)) * CGFloat(M_PI_2)
-        }
-        self.rotationAngle = rotation
-    }
-    
-    open func resetCropRect() {
-        resetCropRectAnimated(false)
-    }
-    
-    open func resetCropRectAnimated(_ animated: Bool) {
+    func resetCropRectAnimated(_ animated: Bool = false) {
         if animated {
             UIView.beginAnimations(nil, context: nil)
             UIView.setAnimationDuration(0.25)
@@ -253,7 +241,7 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
         }
     }
     
-    open func zoomedCropRect() -> CGRect {
+    func zoomedCropRect() -> CGRect {
         let cropRect = convert(scrollView.frame, to: zoomingView)
         var ratio: CGFloat = 1.0
         let orientation = UIApplication.shared.statusBarOrientation
@@ -271,7 +259,7 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
         return zoomedCropRect
     }
     
-    open func croppedImage(_ image: UIImage) -> UIImage {
+    func croppedImage(_ image: UIImage) -> UIImage {
         imageSize = image.size
         return image.rotatedImageWithTransform(rotation, croppedToRect: zoomedCropRect())
     }
@@ -292,17 +280,7 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
         }
     }
     
-    // MARK: - Private methods
-    fileprivate func showOverlayView(_ show: Bool) {
-        let color = show ? UIColor(white: 0.0, alpha: 0.4) : UIColor.clear
-        
-        topOverlayView.backgroundColor = color
-        leftOverlayView.backgroundColor = color
-        rightOverlayView.backgroundColor = color
-        bottomOverlayView.backgroundColor = color
-    }
-    
-    fileprivate func setupEditingRect() {
+    func setupEditingRect() {
         let interfaceOrientation = UIApplication.shared.statusBarOrientation
         if interfaceOrientation.isPortrait {
             editingRect = bounds.insetBy(dx: MarginLeft, dy: MarginTop)
@@ -314,7 +292,7 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
         }
     }
     
-    fileprivate func setupZoomingView() {
+    func setupZoomingView() {
         let cropRect = AVMakeRect(aspectRatio: imageSize, insideRect: insetRect)
         
         scrollView.frame = cropRect
@@ -325,7 +303,7 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
         scrollView.addSubview(zoomingView!)
     }
 
-    fileprivate func setupImageView() {
+    func setupImageView() {
         let imageView = UIImageView(frame: zoomingView!.bounds)
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
@@ -335,23 +313,15 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
         usingCustomImageView = false
     }
     
-    fileprivate func layoutCropRectViewWithCropRect(_ cropRect: CGRect) {
+    func layoutCropRectViewWithCropRect(_ cropRect: CGRect) {
         cropRectView.frame = cropRect
-        layoutOverlayViewsWithCropRect(cropRect)
     }
     
-    fileprivate func layoutOverlayViewsWithCropRect(_ cropRect: CGRect) {
-        topOverlayView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: cropRect.minY)
-        leftOverlayView.frame = CGRect(x: 0, y: cropRect.minY, width: cropRect.minX, height: cropRect.height)
-        rightOverlayView.frame = CGRect(x: cropRect.maxX, y: cropRect.minY, width: bounds.width - cropRect.maxX, height: cropRect.height)
-        bottomOverlayView.frame = CGRect(x: 0, y: cropRect.maxY, width: bounds.width, height: bounds.height - cropRect.maxY)
-    }
-    
-    fileprivate func zoomToCropRect(_ toRect: CGRect) {
+    func zoomToCropRect(_ toRect: CGRect) {
         zoomToCropRect(toRect, shouldCenter: false, animated: true)
     }
     
-    fileprivate func zoomToCropRect(_ toRect: CGRect, shouldCenter: Bool, animated: Bool, completion: (() -> Void)? = nil) {
+    func zoomToCropRect(_ toRect: CGRect, shouldCenter: Bool, animated: Bool, completion: (() -> Void)? = nil) {
         if scrollView.frame.equalTo(toRect) {
             return
         }
@@ -388,7 +358,7 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
         }
     }
     
-    fileprivate func cappedCropRectInImageRectWithCropRectView(_ cropRectView: CropRectView) -> CGRect {
+    func cappedCropRectInImageRectWithCropRectView(_ cropRectView: CropRectView) -> CGRect {
         var cropRect = cropRectView.frame
         
         let rect = convert(cropRect, to: scrollView)
@@ -421,7 +391,7 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
         return cropRect
     }
     
-    fileprivate func automaticZoomIfEdgeTouched(_ cropRect: CGRect) {
+    func automaticZoomIfEdgeTouched(_ cropRect: CGRect) {
         if cropRect.minX < editingRect.minX - 5.0 ||
             cropRect.maxX > editingRect.maxX + 5.0 ||
             cropRect.minY < editingRect.minY - 5.0 ||
@@ -432,7 +402,7 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
         }
     }
     
-    fileprivate func setCropAspectRatio(_ ratio: CGFloat, shouldCenter: Bool) {
+    func setCropAspectRatio(_ ratio: CGFloat, shouldCenter: Bool) {
         var cropRect = scrollView.frame
         var width = cropRect.width
         var height = cropRect.height
@@ -455,8 +425,27 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
             self.scrollView.minimumZoomScale = scale
         }
     }
+}
+
+// MARK: - ScrollView delegate methods
+extension CropView: UIScrollViewDelegate {
+    open func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return zoomingView
+    }
     
-    // MARK: - CropView delegate methods
+    open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let contentOffset = scrollView.contentOffset
+        targetContentOffset.pointee = contentOffset
+    }
+}
+
+extension CropView: UIGestureRecognizerDelegate {
+    open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
+
+extension CropView: CropRectViewDelegate {
     func cropRectViewDidBeginEditing(_ view: CropRectView) {
         resizing = true
     }
@@ -470,20 +459,5 @@ open class CropView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, 
     func cropRectViewDidEndEditing(_ view: CropRectView) {
         resizing = false
         zoomToCropRect(cropRectView.frame)
-    }
-    
-    // MARK: - ScrollView delegate methods
-    open func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return zoomingView
-    }
-    
-    open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let contentOffset = scrollView.contentOffset
-        targetContentOffset.pointee = contentOffset
-    }
-    
-    // MARK: - Gesture Recognizer delegate methods
-    open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
     }
 }
