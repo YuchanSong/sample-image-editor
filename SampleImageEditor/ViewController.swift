@@ -18,11 +18,6 @@ class ViewController: UIViewController {
         self.picker.modalPresentationStyle = .fullScreen
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.isNavigationBarHidden = true
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initPicker()
@@ -36,11 +31,10 @@ class ViewController: UIViewController {
 //MARK: - UIImagePickerController Delegate
 extension ViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             self.dismiss(animated: false, completion: {
-                let controller = CropViewController(delegate: self, image: image)
-                self.navigationController?.pushViewController(controller, animated: true)
+                let cropVC = CropViewController(delegate: self, image: image)
+                self.present(cropVC, animated: true, completion: nil)
             })
         }
     }
@@ -48,12 +42,15 @@ extension ViewController : UIImagePickerControllerDelegate, UINavigationControll
 
 //MARK: - CropViewController Delegate
 extension ViewController: CropViewControllerDelegate {
-    func cropViewController(_ vc: CropViewController, didFinishCroppingImage image: UIImage) {
-        vc.navigationController?.popViewController(animated: true)
-        self.imageView.image = image
+    func cropViewController(didFinishCroppingImage image: UIImage?) {
+        if let _ = image {
+            self.imageView.image = image
+        } else {
+            print("image processing error...")
+        }
     }
     
-    func cropViewControllerDidCancel(_ vc: CropViewController) {
-        vc.navigationController?.popViewController(animated: true)
+    func cropViewControllerDidCancel() {
+        print("user cancel")
     }
 }

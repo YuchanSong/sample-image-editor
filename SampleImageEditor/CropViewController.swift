@@ -8,15 +8,15 @@
 import UIKit
 
 protocol CropViewControllerDelegate {
-    func cropViewController(_ vc: CropViewController, didFinishCroppingImage image: UIImage)
-    func cropViewControllerDidCancel(_ vc: CropViewController)
+    func cropViewController(didFinishCroppingImage image: UIImage?)
+    func cropViewControllerDidCancel()
 }
 
 class CropViewController: UIViewController {
-    private var delegate: CropViewControllerDelegate?
-    private var cropView: CropView!
     
     private var image: UIImage?
+    private var cropView: CropView!
+    private var delegate: CropViewControllerDelegate?
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -29,11 +29,69 @@ class CropViewController: UIViewController {
         self.modalPresentationStyle = style
     }
     
+    //MARK: - UINavagationBar
+    func generateNavBar() {
+        let navBar = UINavigationBar()
+        self.view.addSubview(navBar)
+        
+        navBar.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            NSLayoutConstraint(item: navBar,
+                               attribute: NSLayoutConstraint.Attribute.top,
+                               relatedBy: NSLayoutConstraint.Relation.equal,
+                               toItem: view.layoutMarginsGuide,
+                               attribute: NSLayoutConstraint.Attribute.top,
+                               multiplier: 1,
+                               constant: 0),
+            NSLayoutConstraint(item: navBar,
+                               attribute: NSLayoutConstraint.Attribute.width,
+                               relatedBy: NSLayoutConstraint.Relation.equal,
+                               toItem: view,
+                               attribute: NSLayoutConstraint.Attribute.width,
+                               multiplier: 1,
+                               constant: 0),
+        ])
+        
+        let navItem = UINavigationItem(title: "이미지 편집기")
+        navItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(CropViewController.cancel(_:)))
+        navItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(CropViewController.done(_:)))
+        navBar.setItems([navItem], animated: false)
+    }
+    
+    //MARK: - UIToobar
+    func getnerateToolBar() {
+        let toolBar = UIToolbar()
+        self.view.addSubview(toolBar)
+
+        toolBar.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            NSLayoutConstraint(item: toolBar,
+                               attribute: NSLayoutConstraint.Attribute.bottom,
+                               relatedBy: NSLayoutConstraint.Relation.equal,
+                               toItem: view.layoutMarginsGuide,
+                               attribute: NSLayoutConstraint.Attribute.bottom,
+                               multiplier: 1,
+                               constant: 0),
+            NSLayoutConstraint(item: toolBar,
+                               attribute: NSLayoutConstraint.Attribute.width,
+                               relatedBy: NSLayoutConstraint.Relation.equal,
+                               toItem: view,
+                               attribute: NSLayoutConstraint.Attribute.width,
+                               multiplier: 1,
+                               constant: 0),
+        ])
+        
+        let crop = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(crop))
+        let rotate = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(rotate))
+        let fixeibleSpacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolBar.items = [crop, fixeibleSpacer, rotate]
+    }
+    
     override func loadView() {
         let contentView: UIView = {
             let v = UIView()
-            v.autoresizingMask = .flexibleWidth
-            v.backgroundColor = UIColor.black
+//            v.autoresizingMask = .flexibleWidth
+//            v.backgroundColor = UIColor.black
             return v
         }()
 
@@ -42,29 +100,31 @@ class CropViewController: UIViewController {
         contentView.addSubview(cropView)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        self.navigationController?.isNavigationBarHidden = false
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(CropViewController.cancel(_:)))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(CropViewController.done(_:)))
-        
-        self.cropView.image = image
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.cropView.image = image
+        self.generateNavBar()
+        self.getnerateToolBar()
+    }
+    
+    @objc func crop(_ sender: UIBarButtonItem) {
+        self.cropView.cropRectView.isHidden = !self.cropView.cropRectView.isHidden
+    }
+    
+    @objc func rotate(_ sender: UIBarButtonItem) {
+        self.cropView.rotationAngle = .pi / 2
     }
     
     @objc func cancel(_ sender: UIBarButtonItem) {
-        delegate?.cropViewControllerDidCancel(self)
+        self.delegate?.cropViewControllerDidCancel()
+        self.dismiss(animated: true, completion: nil)
+        cropView.cropRectView.isHidden = true
     }
     
     @objc func done(_ sender: UIBarButtonItem) {
-        if let image = cropView.croppedImage {
-            delegate?.cropViewController(self, didFinishCroppingImage: image)
-        } else {
-            print("img return error....")
-        }
+        self.delegate?.cropViewController(didFinishCroppingImage: cropView.croppedImage)
+        self.dismiss(animated: true, completion: nil)
     }
 }
+
