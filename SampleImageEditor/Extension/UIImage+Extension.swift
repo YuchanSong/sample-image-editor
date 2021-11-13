@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 extension UIImage {
     func rotatedImageWithTransform(_ img: UIImage?, croppedToRect rect: CGRect) -> UIImage {
         if let img = img {

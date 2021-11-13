@@ -81,8 +81,8 @@ class CropViewController: UIViewController {
                                constant: 0),
         ])
         
-        let crop = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(crop))
-        let rotate = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(rotate))
+        let crop = UIBarButtonItem(image: UIImage(named: "Crop"), style: .plain, target: self, action: #selector(crop))
+        let rotate = UIBarButtonItem(image: UIImage(named: "Rotation"), style: .plain, target: self, action: #selector(rotate))
         let fixeibleSpacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolBar.items = [fixeibleSpacer, crop, fixeibleSpacer, rotate, fixeibleSpacer]
     }

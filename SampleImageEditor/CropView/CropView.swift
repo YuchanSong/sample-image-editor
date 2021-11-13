@@ -51,7 +51,7 @@ class CropView: UIView {
         
     var imageSize = CGSize(width: 1.0, height: 1.0)
     var scrollView: UIScrollView!
-    var zoomingView: UIView?
+    var zoomingView: UIView!
     let cropRectView = CropRectView()
     var insetRect = CGRect.zero
     var editingRect = CGRect.zero
@@ -160,28 +160,28 @@ class CropView: UIView {
         var cropRect = cropRectView.frame
 
         let rect = convert(cropRect, to: scrollView)
-        if rect.minX < zoomingView!.frame.minX {
-            cropRect.origin.x = scrollView.convert(zoomingView!.frame, to: self).minX
+        if rect.minX < zoomingView.frame.minX {
+            cropRect.origin.x = scrollView.convert(zoomingView.frame, to: self).minX
             let cappedWidth = rect.maxX
             let height = cropRect.size.height
             cropRect.size = CGSize(width: cappedWidth, height: height)
         }
 
-        if rect.minY < zoomingView!.frame.minY {
-            cropRect.origin.y = scrollView.convert(zoomingView!.frame, to: self).minY
+        if rect.minY < zoomingView.frame.minY {
+            cropRect.origin.y = scrollView.convert(zoomingView.frame, to: self).minY
             let cappedHeight = rect.maxY
             let width = cropRect.size.width
             cropRect.size = CGSize(width: width, height: cappedHeight)
         }
 
-        if rect.maxX > zoomingView!.frame.maxX {
-            let cappedWidth = scrollView.convert(zoomingView!.frame, to: self).maxX - cropRect.minX
+        if rect.maxX > zoomingView.frame.maxX {
+            let cappedWidth = scrollView.convert(zoomingView.frame, to: self).maxX - cropRect.minX
             let height = cropRect.size.height
             cropRect.size = CGSize(width: cappedWidth, height: height)
         }
 
-        if rect.maxY > zoomingView!.frame.maxY {
-            let cappedHeight = scrollView.convert(zoomingView!.frame, to: self).maxY - cropRect.minY
+        if rect.maxY > zoomingView.frame.maxY {
+            let cappedHeight = scrollView.convert(zoomingView.frame, to: self).maxY - cropRect.minY
             let width = cropRect.size.width
             cropRect.size = CGSize(width: width, height: cappedHeight)
         }
