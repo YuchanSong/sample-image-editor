@@ -84,14 +84,14 @@ class CropViewController: UIViewController {
         let crop = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(crop))
         let rotate = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(rotate))
         let fixeibleSpacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolBar.items = [crop, fixeibleSpacer, rotate]
+        toolBar.items = [fixeibleSpacer, crop, fixeibleSpacer, rotate, fixeibleSpacer]
     }
     
     override func loadView() {
         let contentView: UIView = {
             let v = UIView()
-//            v.autoresizingMask = .flexibleWidth
-//            v.backgroundColor = UIColor.black
+            v.autoresizingMask = .flexibleWidth
+            v.backgroundColor = UIColor.black
             return v
         }()
 
@@ -113,7 +113,7 @@ class CropViewController: UIViewController {
     }
     
     @objc func rotate(_ sender: UIBarButtonItem) {
-        self.cropView.rotationAngle = .pi / 2
+        self.cropView.rotation = .pi / 2
     }
     
     @objc func cancel(_ sender: UIBarButtonItem) {
