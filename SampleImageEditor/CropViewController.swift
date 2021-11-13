@@ -113,7 +113,7 @@ class CropViewController: UIViewController {
     }
     
     @objc func rotate(_ sender: UIBarButtonItem) {
-        self.cropView.rotation = .pi / 2
+        self.cropView.rotation(degree: .pi / 2)
     }
     
     @objc func cancel(_ sender: UIBarButtonItem) {

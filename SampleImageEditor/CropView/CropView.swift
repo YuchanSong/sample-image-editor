@@ -29,32 +29,18 @@ class CropView: UIView {
         }
     }
     
-    var imageView: UIView? {
-        didSet {
-            if let view = imageView, image == nil {
-                self.imageSize = view.frame.size
-            }
-        }
-    }
+    var imageView: UIView?
+    var imageSize = CGSize(width: 1.0, height: 1.0)
     
     var croppedImage: UIImage? {
         return image?.rotatedImageWithTransform(image, croppedToRect: croppedRect())
     }
-    
-    var rotation: CGFloat = 0 {
-        didSet {
-            self.image = self.image?.rotate(radians: rotation)
-            initScrollView()
-            initImageView()
-        }
-    }
         
-    var imageSize = CGSize(width: 1.0, height: 1.0)
     var scrollView: UIScrollView!
     var zoomingView: UIView!
     let cropRectView = CropRectView()
+    
     var insetRect = CGRect.zero
-    var editingRect = CGRect.zero
     var resizing = false
     
     let marginTop: CGFloat = 44.0
@@ -80,62 +66,46 @@ class CropView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        initEditingRect()
-
         if imageView == nil {
             insetRect = bounds.insetBy(dx: marginLeft, dy: marginTop)
-            initScrollView()
-            initImageView()
+            refreshView()
         }
         
         resizing ? nil : resizeCropRectView(scrollView.frame)
     }
     
-    func croppedRect() -> CGRect {
-        let cropRect = convert(scrollView.frame, to: zoomingView)
-        let ratio = AVMakeRect(aspectRatio: imageSize, insideRect: insetRect).width / imageSize.width
-
-        return CGRect(
-            x: cropRect.origin.x / ratio,
-            y: cropRect.origin.y / ratio,
-            width: cropRect.size.width / ratio,
-            height: cropRect.size.height / ratio)
-    }
-    
-    func initEditingRect() {
-        editingRect = bounds.insetBy(dx: marginLeft, dy: marginTop)
-    }
-    
-    func initScrollView() {
+    // MARK: - Refresh scrollView & zoomingView
+    func refreshView() {
+        if self.imageView != nil { scrollView.subviews.forEach({ $0.removeFromSuperview() }) }
         let cropRect = AVMakeRect(aspectRatio: imageSize, insideRect: insetRect)
         
         scrollView.frame = cropRect
         scrollView.contentSize = cropRect.size
         
         zoomingView = UIView(frame: scrollView.bounds)
-        zoomingView?.backgroundColor = .clear
-        scrollView.addSubview(zoomingView!)
-    }
-
-    func initImageView() {
-        let imageView = UIImageView(frame: zoomingView!.bounds)
+        zoomingView.backgroundColor = .clear
+        scrollView.addSubview(zoomingView)
+        
+        let imageView = UIImageView(frame: zoomingView.bounds)
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
         imageView.image = image
-        zoomingView?.addSubview(imageView)
+        zoomingView.addSubview(imageView)
         self.imageView = imageView
     }
     
+    // MARK: - CropRectView 사이즈 조절
     func resizeCropRectView(_ cropRect: CGRect) {
         cropRectView.frame = cropRect
     }
     
-    func zoomCropRect(_ toRect: CGRect) {
+    // MARK: - CropView 위치로 ScrollView 사이즈 변경
+    func zoomCroppedRect(_ toRect: CGRect) {
         if scrollView.frame.equalTo(toRect) { return }
 
         let width = toRect.width
         let height = toRect.height
-        let scale = min(editingRect.width / width, editingRect.height / height)
+        let scale = min(insetRect.width / width, insetRect.height / height)
 
         let scaledWidth = width * scale
         let scaledHeight = height * scale
@@ -156,6 +126,7 @@ class CropView: UIView {
         })
     }
     
+    // MARK: - CropView Edge 크기 제한
     func restrictCropView(_ cropRectView: CropRectView) -> CGRect {
         var cropRect = cropRectView.frame
 
@@ -188,17 +159,31 @@ class CropView: UIView {
 
         return cropRect
     }
+    
+    // MARK: - Cropped Image Rect 계산
+    func croppedRect() -> CGRect {
+        let cropRect = convert(scrollView.frame, to: zoomingView)
+        let ratio = AVMakeRect(aspectRatio: imageSize, insideRect: insetRect).width / imageSize.width
+
+        return CGRect(
+            x: cropRect.origin.x / ratio,
+            y: cropRect.origin.y / ratio,
+            width: cropRect.size.width / ratio,
+            height: cropRect.size.height / ratio)
+    }
+    
+    // MARK: - Image Rotation by degree
+    func rotation(degree: CGFloat) {
+        self.image = self.image?.rotate(radians: degree)
+        self.refreshView()
+    }
 }
 
 // MARK: - ScrollView delegate methods
 extension CropView: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        print("viewForZooming")
         return zoomingView
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let contentOffset = scrollView.contentOffset
-        targetContentOffset.pointee = contentOffset
     }
 }
 
@@ -222,6 +207,6 @@ extension CropView: CropRectViewDelegate {
     
     func cropRectViewDidEndEditing(_ view: CropRectView) {
         resizing = false
-        zoomCropRect(cropRectView.frame)
+        zoomCroppedRect(cropRectView.frame)
     }
 }
