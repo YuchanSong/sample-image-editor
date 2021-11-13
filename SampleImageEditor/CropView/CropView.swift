@@ -31,12 +31,6 @@ class CropView: UIView {
     }
     
     var rotation: CGAffineTransform {
-        set {
-            if let imgView = imageView {
-                self.imageView!.transform = imgView.transform.rotated(by: .pi / 2)    // 90˚
-//                self.imageView?.transform = newValue
-            }
-        }
         get {
             guard let imgView = imageView else {
                 return CGAffineTransform.identity
@@ -45,14 +39,13 @@ class CropView: UIView {
         }
     }
     
-//    var rotationAngle: CGRect {
-//        set {
-//            zoomToCropRect(newValue)
-//        }
-//        get {
-//            return scrollView.frame
-//        }
-//    }
+    var rotationAngle: CGFloat = 0 {
+        didSet {
+            if let imgView = imageView {
+                self.imageView?.transform = imgView.transform.rotated(by: rotationAngle)
+            }
+        }
+    }
         
     var imageSize = CGSize(width: 1.0, height: 1.0)
     var scrollView: UIScrollView!
@@ -108,20 +101,13 @@ class CropView: UIView {
     
     func zoomedCropRect() -> CGRect {
         let cropRect = convert(scrollView.frame, to: zoomingView)
-        var ratio: CGFloat = 1.0
-        let orientation = UIApplication.shared.statusBarOrientation
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad || orientation.isPortrait) {
-            ratio = AVMakeRect(aspectRatio: imageSize, insideRect: insetRect).width / imageSize.width
-        } else {
-            ratio = AVMakeRect(aspectRatio: imageSize, insideRect: insetRect).height / imageSize.height
-        }
+        let ratio = AVMakeRect(aspectRatio: imageSize, insideRect: insetRect).width / imageSize.width
 
-        let zoomedCropRect = CGRect(x: cropRect.origin.x / ratio,
+        return CGRect(
+            x: cropRect.origin.x / ratio,
             y: cropRect.origin.y / ratio,
             width: cropRect.size.width / ratio,
             height: cropRect.size.height / ratio)
-        
-        return zoomedCropRect
     }
     
     func setupEditingRect() {
