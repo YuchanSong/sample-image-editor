@@ -17,8 +17,7 @@ protocol ResizeControlDelegate: class {
 class ResizeControl: UIView {
     weak var delegate: ResizeControlDelegate?
     var translation = CGPoint.zero
-    var enabled = true
-    fileprivate var startPoint = CGPoint.zero
+    var startPoint = CGPoint.zero
 
     override init(frame: CGRect) {
         super.init(frame: CGRect(x: frame.origin.x, y: frame.origin.y, width: 44.0, height: 44.0))
@@ -30,7 +29,7 @@ class ResizeControl: UIView {
         initialize()
     }
     
-    fileprivate func initialize() {
+    func initialize() {
         backgroundColor = UIColor.clear
         isExclusiveTouch = true
         
@@ -39,10 +38,6 @@ class ResizeControl: UIView {
     }
     
     @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
-        if !enabled {
-            return
-        }
-        
         switch gestureRecognizer.state {
         case .began:
             let translation = gestureRecognizer.translation(in: superview)
@@ -56,6 +51,5 @@ class ResizeControl: UIView {
             delegate?.resizeControlDidEndResizing(self)
         default: ()
         }
-        
     }
 }

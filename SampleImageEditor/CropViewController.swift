@@ -81,8 +81,8 @@ class CropViewController: UIViewController {
                                constant: 0),
         ])
         
-        let crop = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: nil)
-        let rotate = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: nil)
+        let crop = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(crop))
+        let rotate = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(rotate))
         let fixeibleSpacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolBar.items = [crop, fixeibleSpacer, rotate]
     }
@@ -90,8 +90,8 @@ class CropViewController: UIViewController {
     override func loadView() {
         let contentView: UIView = {
             let v = UIView()
-            v.autoresizingMask = .flexibleWidth
-            v.backgroundColor = UIColor.black
+//            v.autoresizingMask = .flexibleWidth
+//            v.backgroundColor = UIColor.black
             return v
         }()
 
@@ -108,9 +108,18 @@ class CropViewController: UIViewController {
         self.getnerateToolBar()
     }
     
+    @objc func crop(_ sender: UIBarButtonItem) {
+        self.cropView.cropRectView.isHidden = !self.cropView.cropRectView.isHidden
+    }
+    
+    @objc func rotate(_ sender: UIBarButtonItem) {
+        self.cropView.rotation = self.cropView.image?.rotatedImageWithTransform(<#T##rotation: CGAffineTransform##CGAffineTransform#>, croppedToRect: <#T##CGRect#>)
+    }
+    
     @objc func cancel(_ sender: UIBarButtonItem) {
         self.delegate?.cropViewControllerDidCancel()
         self.dismiss(animated: true, completion: nil)
+        cropView.cropRectView.isHidden = true
     }
     
     @objc func done(_ sender: UIBarButtonItem) {
@@ -118,3 +127,4 @@ class CropViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
 }
+

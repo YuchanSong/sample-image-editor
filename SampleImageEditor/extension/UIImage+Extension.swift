@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 extension UIImage {
     func rotatedImageWithTransform(_ rotation: CGAffineTransform, croppedToRect rect: CGRect) -> UIImage {
         let rotatedImage = rotatedImageWithTransform(rotation)
@@ -19,7 +20,7 @@ extension UIImage {
         return image
     }
     
-    fileprivate func rotatedImageWithTransform(_ transform: CGAffineTransform) -> UIImage {
+    func rotatedImageWithTransform(_ transform: CGAffineTransform) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(size, true, scale)
         let context = UIGraphicsGetCurrentContext()
         context?.translateBy(x: size.width / 2.0, y: size.height / 2.0)
