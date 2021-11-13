@@ -14,8 +14,8 @@ protocol CropViewControllerDelegate {
 
 class CropViewController: UIViewController {
     
-    private var cropView: CropView!
     private var image: UIImage?
+    private var cropView: CropView!
     private var delegate: CropViewControllerDelegate?
     
     required init?(coder: NSCoder) {
@@ -53,7 +53,7 @@ class CropViewController: UIViewController {
         ])
         
         let navItem = UINavigationItem(title: "이미지 편집기")
-        navItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(CropViewController.cancel(_:)))
+        navItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(CropViewController.cancel(_:)))
         navItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(CropViewController.done(_:)))
         navBar.setItems([navItem], animated: false)
     }
