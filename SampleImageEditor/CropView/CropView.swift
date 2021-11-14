@@ -60,12 +60,10 @@ class CropView: UIView {
 
     private func initialize() {
         autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        backgroundColor = UIColor.clear
 
         scrollView = UIScrollView(frame: bounds)
         scrollView.delegate = self
         scrollView.autoresizingMask = [.flexibleTopMargin, .flexibleLeftMargin, .flexibleBottomMargin, .flexibleRightMargin]
-        scrollView.backgroundColor = UIColor.clear
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 5.0
         addSubview(scrollView)
@@ -95,11 +93,9 @@ class CropView: UIView {
         scrollView.contentSize = cropRect.size
         
         zoomingView = UIView(frame: scrollView.bounds)
-        zoomingView.backgroundColor = .clear
         scrollView.addSubview(zoomingView)
         
         let imageView = UIImageView(frame: zoomingView.bounds)
-        imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
         imageView.image = image
         zoomingView.addSubview(imageView)
@@ -131,7 +127,7 @@ class CropView: UIView {
         zoomRect.size.width = cropRect.width / (scrollView.zoomScale * scale)
         zoomRect.size.height = cropRect.height / (scrollView.zoomScale * scale)
 
-        UIView.animate(withDuration: 0.25, delay: 0.0, options: .beginFromCurrentState, animations: { [unowned self] in
+        UIView.animate(withDuration: 0.25, delay: 0.0, options: .beginFromCurrentState, animations: {
             self.scrollView.bounds = cropRect
             self.scrollView.zoom(to: zoomRect, animated: false)
             self.resizeCropRectView(cropRect)
