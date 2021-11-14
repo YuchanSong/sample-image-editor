@@ -48,11 +48,11 @@ extension ViewController: CropViewControllerDelegate {
                 self.imageView.image = image
             }
         } else {
-            Utils.alert(vc: self, msg: "이미지 처리에 실패하였습니다 :(")
+            print("이미지 처리에 실패하였습니다 :(")
         }
     }
     
     func cropViewControllerDidCancel() {
-        Utils.alert(vc: self, msg: "취소되었습니다")
+        print("user canceled")
     }
 }

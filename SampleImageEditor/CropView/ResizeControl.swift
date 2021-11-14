@@ -14,9 +14,10 @@ protocol ResizeControlDelegate {
 }
 
 class ResizeControl: UIView {
-    var delegate: ResizeControlDelegate?
-    var translation = CGPoint.zero
-    var startPoint = CGPoint.zero
+    
+    public var delegate: ResizeControlDelegate?
+    public var translation = CGPoint.zero
+    private var startPoint = CGPoint.zero
 
     override init(frame: CGRect) {
         super.init(frame: CGRect(x: frame.origin.x, y: frame.origin.y, width: 44.0, height: 44.0))
@@ -28,7 +29,7 @@ class ResizeControl: UIView {
         initialize()
     }
     
-    func initialize() {
+    private func initialize() {
         backgroundColor = UIColor.clear
         isExclusiveTouch = true
         

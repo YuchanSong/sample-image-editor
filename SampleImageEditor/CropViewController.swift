@@ -29,8 +29,53 @@ class CropViewController: UIViewController {
         self.modalPresentationStyle = style
     }
     
+    override func loadView() {
+        let contentView: UIView = {
+            let v = UIView()
+            v.autoresizingMask = .flexibleWidth
+            v.backgroundColor = UIColor.black
+            return v
+        }()
+
+        self.view = contentView
+        self.cropView = CropView(frame: contentView.bounds)
+        contentView.addSubview(cropView)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.generateNavBar()
+        self.getnerateToolBar()
+        self.cropView.image = image
+    }
+    
+    //MARK: - crop event
+    @objc func crop(_ sender: UIBarButtonItem) {
+        self.cropView.cropRectIsHidden = !self.cropView.cropRectIsHidden
+    }
+    
+    //MARK: - rotate event
+    @objc func rotate(_ sender: UIBarButtonItem) {
+        self.cropView.rotation = .pi / 2
+    }
+    
+    //MARK: - cancel event
+    @objc func cancel(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: false, completion: {
+            self.delegate?.cropViewControllerDidCancel()
+        })
+    }
+    
+    //MARK: - done event
+    @objc func done(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: false, completion: {
+            self.delegate?.cropViewController(didFinishCroppingImage: self.cropView.croppedImage)
+        })
+    }
+    
     //MARK: - UINavagationBar
-    func generateNavBar() {
+    private func generateNavBar() {
         let navBar = UINavigationBar()
         self.view.addSubview(navBar)
         
@@ -59,7 +104,7 @@ class CropViewController: UIViewController {
     }
     
     //MARK: - UIToobar
-    func getnerateToolBar() {
+    private func getnerateToolBar() {
         let toolBar = UIToolbar()
         self.view.addSubview(toolBar)
 
@@ -85,47 +130,6 @@ class CropViewController: UIViewController {
         let rotate = UIBarButtonItem(image: UIImage(named: "Rotation"), style: .plain, target: self, action: #selector(rotate))
         let fixeibleSpacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolBar.items = [fixeibleSpacer, crop, fixeibleSpacer, rotate, fixeibleSpacer]
-    }
-    
-    override func loadView() {
-        let contentView: UIView = {
-            let v = UIView()
-            v.autoresizingMask = .flexibleWidth
-            v.backgroundColor = UIColor.black
-            return v
-        }()
-
-        self.view = contentView
-        self.cropView = CropView(frame: contentView.bounds)
-        contentView.addSubview(cropView)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.cropView.image = image
-        self.generateNavBar()
-        self.getnerateToolBar()
-    }
-    
-    @objc func crop(_ sender: UIBarButtonItem) {
-        self.cropView.cropRectView.isHidden = !self.cropView.cropRectView.isHidden
-    }
-    
-    @objc func rotate(_ sender: UIBarButtonItem) {
-        self.cropView.rotation(degree: .pi / 2)
-    }
-    
-    @objc func cancel(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: false, completion: {
-            self.delegate?.cropViewControllerDidCancel()
-        })
-    }
-    
-    @objc func done(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: false, completion: {
-            self.delegate?.cropViewController(didFinishCroppingImage: self.cropView.croppedImage)
-        })
     }
 }
 

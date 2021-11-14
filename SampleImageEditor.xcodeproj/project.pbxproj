@@ -11,7 +11,6 @@
 		CBD8C55B274013DF00843C03 /* Crop.png in Resources */ = {isa = PBXBuildFile; fileRef = CBD8C558274013DF00843C03 /* Crop.png */; };
 		CBD8C55C274013DF00843C03 /* Rotation.png in Resources */ = {isa = PBXBuildFile; fileRef = CBD8C559274013DF00843C03 /* Rotation.png */; };
 		CBD8C55D274013DF00843C03 /* CropBorder.png in Resources */ = {isa = PBXBuildFile; fileRef = CBD8C55A274013DF00843C03 /* CropBorder.png */; };
-		CBD8C5602740BFB900843C03 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD8C55F2740BFB900843C03 /* Utils.swift */; };
 		CBEB31A7273A82C70031A02D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31A6273A82C70031A02D /* AppDelegate.swift */; };
 		CBEB31A9273A82C70031A02D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31A8273A82C70031A02D /* SceneDelegate.swift */; };
 		CBEB31AB273A82C70031A02D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31AA273A82C70031A02D /* ViewController.swift */; };
@@ -29,7 +28,6 @@
 		CBD8C558274013DF00843C03 /* Crop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Crop.png; sourceTree = "<group>"; };
 		CBD8C559274013DF00843C03 /* Rotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rotation.png; sourceTree = "<group>"; };
 		CBD8C55A274013DF00843C03 /* CropBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CropBorder.png; sourceTree = "<group>"; };
-		CBD8C55F2740BFB900843C03 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		CBEB31A3273A82C70031A02D /* SampleImageEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleImageEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBEB31A6273A82C70031A02D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBEB31A8273A82C70031A02D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,14 +71,6 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
-		CBD8C55E2740BF9100843C03 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				CBD8C55F2740BFB900843C03 /* Utils.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
 		CBEB319A273A82C70031A02D = {
 			isa = PBXGroup;
 			children = (
@@ -100,7 +90,6 @@
 		CBEB31A5273A82C70031A02D /* SampleImageEditor */ = {
 			isa = PBXGroup;
 			children = (
-				CBD8C55E2740BF9100843C03 /* Utils */,
 				CB6C0913273BEF90009791BC /* Extension */,
 				CBEB31C6273A9F490031A02D /* CropView */,
 				CBEB31A6273A82C70031A02D /* AppDelegate.swift */,
@@ -209,7 +198,6 @@
 				CBEB31AB273A82C70031A02D /* ViewController.swift in Sources */,
 				CBEB31A7273A82C70031A02D /* AppDelegate.swift in Sources */,
 				CB6C0912273BEF87009791BC /* UIImage+Extension.swift in Sources */,
-				CBD8C5602740BFB900843C03 /* Utils.swift in Sources */,
 				CBEB31C2273A9E030031A02D /* CropView.swift in Sources */,
 				CBEB31BF273A9D530031A02D /* CropRectView.swift in Sources */,
 				CBEB31A9273A82C70031A02D /* SceneDelegate.swift in Sources */,
