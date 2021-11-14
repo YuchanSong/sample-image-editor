@@ -81,17 +81,17 @@ class CropViewController: UIViewController {
                                constant: 0),
         ])
         
-        let crop = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(crop))
-        let rotate = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(rotate))
+        let crop = UIBarButtonItem(image: UIImage(named: "Crop"), style: .plain, target: self, action: #selector(crop))
+        let rotate = UIBarButtonItem(image: UIImage(named: "Rotation"), style: .plain, target: self, action: #selector(rotate))
         let fixeibleSpacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolBar.items = [crop, fixeibleSpacer, rotate]
+        toolBar.items = [fixeibleSpacer, crop, fixeibleSpacer, rotate, fixeibleSpacer]
     }
     
     override func loadView() {
         let contentView: UIView = {
             let v = UIView()
-//            v.autoresizingMask = .flexibleWidth
-//            v.backgroundColor = UIColor.black
+            v.autoresizingMask = .flexibleWidth
+            v.backgroundColor = UIColor.black
             return v
         }()
 
@@ -113,18 +113,19 @@ class CropViewController: UIViewController {
     }
     
     @objc func rotate(_ sender: UIBarButtonItem) {
-        self.cropView.rotationAngle = .pi / 2
+        self.cropView.rotation(degree: .pi / 2)
     }
     
     @objc func cancel(_ sender: UIBarButtonItem) {
-        self.delegate?.cropViewControllerDidCancel()
-        self.dismiss(animated: true, completion: nil)
-        cropView.cropRectView.isHidden = true
+        self.dismiss(animated: false, completion: {
+            self.delegate?.cropViewControllerDidCancel()
+        })
     }
     
     @objc func done(_ sender: UIBarButtonItem) {
-        self.delegate?.cropViewController(didFinishCroppingImage: cropView.croppedImage)
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: false, completion: {
+            self.delegate?.cropViewController(didFinishCroppingImage: self.cropView.croppedImage)
+        })
     }
 }
 
