@@ -86,21 +86,17 @@ class CropRectView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        topLeftCornerView.frame.origin = CGPoint(
-            x: topLeftCornerView.bounds.width / -2.0,
-            y: topLeftCornerView.bounds.height / -2.0)
+        topLeftCornerView.frame.origin = CGPoint(x: topLeftCornerView.bounds.width / -2.0,
+                                                 y: topLeftCornerView.bounds.height / -2.0)
         
-        topRightCornerView.frame.origin = CGPoint(
-            x: bounds.width - topRightCornerView.bounds.width - 2.0,
-            y: topRightCornerView.bounds.height / -2.0)
+        topRightCornerView.frame.origin = CGPoint(x: bounds.width - topRightCornerView.bounds.width - 2.0,
+                                                  y: topRightCornerView.bounds.height / -2.0)
         
-        bottomLeftCornerView.frame.origin = CGPoint(
-            x: bottomLeftCornerView.bounds.width / -2.0,
-            y: bounds.height - bottomLeftCornerView.bounds.height / 2.0)
+        bottomLeftCornerView.frame.origin = CGPoint(x: bottomLeftCornerView.bounds.width / -2.0,
+                                                    y: bounds.height - bottomLeftCornerView.bounds.height / 2.0)
         
-        bottomRightCornerView.frame.origin = CGPoint(
-            x: bounds.width - bottomRightCornerView.bounds.width / 2.0,
-            y: bounds.height - bottomRightCornerView.bounds.height / 2.0)
+        bottomRightCornerView.frame.origin = CGPoint(x: bounds.width - bottomRightCornerView.bounds.width / 2.0,
+                                                     y: bounds.height - bottomRightCornerView.bounds.height / 2.0)
     }
     
     private func resizeResizeControlView(_ resizeControl: ResizeControl) -> CGRect {

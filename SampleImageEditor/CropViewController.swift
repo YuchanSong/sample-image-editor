@@ -33,7 +33,7 @@ class CropViewController: UIViewController {
         let contentView: UIView = {
             let v = UIView()
             v.autoresizingMask = .flexibleWidth
-            v.backgroundColor = UIColor.black
+            v.backgroundColor = .white
             return v
         }()
 
@@ -77,6 +77,7 @@ class CropViewController: UIViewController {
     //MARK: - UINavagationBar
     private func generateNavBar() {
         let navBar = UINavigationBar()
+        navBar.barTintColor = .white
         self.view.addSubview(navBar)
         
         navBar.translatesAutoresizingMaskIntoConstraints = false
@@ -97,7 +98,7 @@ class CropViewController: UIViewController {
                                constant: 0),
         ])
         
-        let navItem = UINavigationItem(title: "이미지 편집기")
+        let navItem = UINavigationItem(title: "Photo Edit")
         navItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(CropViewController.cancel(_:)))
         navItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(CropViewController.done(_:)))
         navBar.setItems([navItem], animated: false)
@@ -106,6 +107,7 @@ class CropViewController: UIViewController {
     //MARK: - UIToobar
     private func getnerateToolBar() {
         let toolBar = UIToolbar()
+        toolBar.barTintColor = .white
         self.view.addSubview(toolBar)
 
         toolBar.translatesAutoresizingMaskIntoConstraints = false
