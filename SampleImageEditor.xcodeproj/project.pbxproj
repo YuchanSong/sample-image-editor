@@ -10,7 +10,6 @@
 		CB6C0912273BEF87009791BC /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6C0911273BEF87009791BC /* UIImage+Extension.swift */; };
 		CBD8C55B274013DF00843C03 /* Crop.png in Resources */ = {isa = PBXBuildFile; fileRef = CBD8C558274013DF00843C03 /* Crop.png */; };
 		CBD8C55C274013DF00843C03 /* Rotation.png in Resources */ = {isa = PBXBuildFile; fileRef = CBD8C559274013DF00843C03 /* Rotation.png */; };
-		CBD8C55D274013DF00843C03 /* CropBorder.png in Resources */ = {isa = PBXBuildFile; fileRef = CBD8C55A274013DF00843C03 /* CropBorder.png */; };
 		CBEB31A7273A82C70031A02D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31A6273A82C70031A02D /* AppDelegate.swift */; };
 		CBEB31A9273A82C70031A02D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31A8273A82C70031A02D /* SceneDelegate.swift */; };
 		CBEB31AB273A82C70031A02D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31AA273A82C70031A02D /* ViewController.swift */; };
@@ -18,7 +17,6 @@
 		CBEB31B3273A82CA0031A02D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CBEB31B2273A82CA0031A02D /* Assets.xcassets */; };
 		CBEB31B6273A82CA0031A02D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBEB31B4273A82CA0031A02D /* LaunchScreen.storyboard */; };
 		CBEB31BF273A9D530031A02D /* CropRectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31BD273A9D530031A02D /* CropRectView.swift */; };
-		CBEB31C0273A9D530031A02D /* ResizeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31BE273A9D530031A02D /* ResizeControl.swift */; };
 		CBEB31C2273A9E030031A02D /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31C1273A9E030031A02D /* CropView.swift */; };
 		CBEB31C8273AA1DF0031A02D /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEB31C7273AA1DF0031A02D /* CropViewController.swift */; };
 /* End PBXBuildFile section */
@@ -27,7 +25,6 @@
 		CB6C0911273BEF87009791BC /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		CBD8C558274013DF00843C03 /* Crop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Crop.png; sourceTree = "<group>"; };
 		CBD8C559274013DF00843C03 /* Rotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rotation.png; sourceTree = "<group>"; };
-		CBD8C55A274013DF00843C03 /* CropBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CropBorder.png; sourceTree = "<group>"; };
 		CBEB31A3273A82C70031A02D /* SampleImageEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleImageEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBEB31A6273A82C70031A02D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBEB31A8273A82C70031A02D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -37,7 +34,6 @@
 		CBEB31B5273A82CA0031A02D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CBEB31B7273A82CA0031A02D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBEB31BD273A9D530031A02D /* CropRectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropRectView.swift; sourceTree = "<group>"; };
-		CBEB31BE273A9D530031A02D /* ResizeControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizeControl.swift; sourceTree = "<group>"; };
 		CBEB31C1273A9E030031A02D /* CropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropView.swift; sourceTree = "<group>"; };
 		CBEB31C7273AA1DF0031A02D /* CropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,7 +102,6 @@
 		CBEB31C3273A9E1F0031A02D /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				CBD8C55A274013DF00843C03 /* CropBorder.png */,
 				CBD8C558274013DF00843C03 /* Crop.png */,
 				CBD8C559274013DF00843C03 /* Rotation.png */,
 			);
@@ -118,7 +113,6 @@
 			children = (
 				CBEB31C1273A9E030031A02D /* CropView.swift */,
 				CBEB31BD273A9D530031A02D /* CropRectView.swift */,
-				CBEB31BE273A9D530031A02D /* ResizeControl.swift */,
 			);
 			path = CropView;
 			sourceTree = "<group>";
@@ -184,7 +178,6 @@
 				CBD8C55C274013DF00843C03 /* Rotation.png in Resources */,
 				CBEB31AE273A82C70031A02D /* Main.storyboard in Resources */,
 				CBD8C55B274013DF00843C03 /* Crop.png in Resources */,
-				CBD8C55D274013DF00843C03 /* CropBorder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +195,6 @@
 				CBEB31BF273A9D530031A02D /* CropRectView.swift in Sources */,
 				CBEB31A9273A82C70031A02D /* SceneDelegate.swift in Sources */,
 				CBEB31C8273AA1DF0031A02D /* CropViewController.swift in Sources */,
-				CBEB31C0273A9D530031A02D /* ResizeControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
