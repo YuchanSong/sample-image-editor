@@ -52,12 +52,12 @@ class CropViewController: UIViewController {
     
     //MARK: - crop event
     @objc func crop(_ sender: UIBarButtonItem) {
-        self.cropView.cropRectView.isHidden = !self.cropView.cropRectView.isHidden
+        self.cropView.cropRectIsHidden = !self.cropView.cropRectIsHidden
     }
     
     //MARK: - rotate event
     @objc func rotate(_ sender: UIBarButtonItem) {
-        self.cropView.rotation(degree: .pi / 2)
+        self.cropView.rotation = .pi / 2
     }
     
     //MARK: - cancel event
@@ -75,7 +75,7 @@ class CropViewController: UIViewController {
     }
     
     //MARK: - UINavagationBar
-    func generateNavBar() {
+    private func generateNavBar() {
         let navBar = UINavigationBar()
         self.view.addSubview(navBar)
         
@@ -104,7 +104,7 @@ class CropViewController: UIViewController {
     }
     
     //MARK: - UIToobar
-    func getnerateToolBar() {
+    private func getnerateToolBar() {
         let toolBar = UIToolbar()
         self.view.addSubview(toolBar)
 
