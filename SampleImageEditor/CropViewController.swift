@@ -117,14 +117,15 @@ class CropViewController: UIViewController {
     }
     
     @objc func cancel(_ sender: UIBarButtonItem) {
-        self.delegate?.cropViewControllerDidCancel()
-        self.dismiss(animated: true, completion: nil)
-        cropView.cropRectView.isHidden = true
+        self.dismiss(animated: false, completion: {
+            self.delegate?.cropViewControllerDidCancel()
+        })
     }
     
     @objc func done(_ sender: UIBarButtonItem) {
-        self.delegate?.cropViewController(didFinishCroppingImage: cropView.croppedImage)
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: false, completion: {
+            self.delegate?.cropViewController(didFinishCroppingImage: self.cropView.croppedImage)
+        })
     }
 }
 

@@ -2,8 +2,7 @@
 //  CropView.swift
 //  CropViewController
 //
-//  Created by Guilherme Moura on 2/25/16.
-//  Copyright © 2016 Reefactor, Inc. All rights reserved.
+//  Created by ycsong on 2021/11/09.
 //
 
 import UIKit
@@ -33,18 +32,16 @@ class CropView: UIView {
     var imageSize = CGSize(width: 1.0, height: 1.0)
     
     var croppedImage: UIImage? {
-        return image?.rotatedImageWithTransform(image, croppedToRect: croppedRect())
+        return image?.processingImage(image, croppedRect())
     }
         
     var scrollView: UIScrollView!
     var zoomingView: UIView!
     let cropRectView = CropRectView()
+    let margin: CGFloat = 44.0
     
     var insetRect = CGRect.zero
     var resizing = false
-    
-    let marginTop: CGFloat = 44.0
-    let marginLeft: CGFloat = 44.0
 
     func initialize() {
         autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -67,7 +64,7 @@ class CropView: UIView {
         super.layoutSubviews()
         
         if imageView == nil {
-            insetRect = bounds.insetBy(dx: marginLeft, dy: marginTop)
+            insetRect = bounds.insetBy(dx: margin, dy: margin)
             refreshView()
         }
         
@@ -182,7 +179,6 @@ class CropView: UIView {
 // MARK: - ScrollView delegate methods
 extension CropView: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        print("viewForZooming")
         return zoomingView
     }
 }

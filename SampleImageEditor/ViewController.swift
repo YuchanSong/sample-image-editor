@@ -44,13 +44,15 @@ extension ViewController : UIImagePickerControllerDelegate, UINavigationControll
 extension ViewController: CropViewControllerDelegate {
     func cropViewController(didFinishCroppingImage image: UIImage?) {
         if let _ = image {
-            self.imageView.image = image
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
         } else {
-            print("image processing error...")
+            Utils.alert(vc: self, msg: "이미지 처리에 실패하였습니다 :(")
         }
     }
     
     func cropViewControllerDidCancel() {
-        print("user cancel")
+        Utils.alert(vc: self, msg: "취소되었습니다")
     }
 }

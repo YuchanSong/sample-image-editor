@@ -8,10 +8,10 @@
 import UIKit
 
 extension UIImage {
-    func rotatedImageWithTransform(_ img: UIImage?, croppedToRect rect: CGRect) -> UIImage {
+    func processingImage(_ img: UIImage?, _ croppedRect: CGRect) -> UIImage {
         if let img = img {
             let scale = img.scale
-            let cropRect = rect.applying(CGAffineTransform(scaleX: scale, y: scale))
+            let cropRect = croppedRect.applying(CGAffineTransform(scaleX: scale, y: scale))
             
             if let croppedImage = img.cgImage?.cropping(to: cropRect) {
                 return UIImage(cgImage: croppedImage, scale: self.scale, orientation: img.imageOrientation)

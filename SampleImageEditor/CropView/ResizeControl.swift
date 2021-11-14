@@ -1,21 +1,20 @@
 //
 //  ResizeControl.swift
-//  CropViewController
+//  SampleImageEditor
 //
-//  Created by Guilherme Moura on 2/26/16.
-//  Copyright © 2016 Reefactor, Inc. All rights reserved.
+//  Created by ycsong on 2021/11/09.
 //
 
 import UIKit
 
-protocol ResizeControlDelegate: class {
+protocol ResizeControlDelegate {
     func resizeControlDidBeginResizing(_ control: ResizeControl)
     func resizeControlDidResize(_ control: ResizeControl)
     func resizeControlDidEndResizing(_ control: ResizeControl)
 }
 
 class ResizeControl: UIView {
-    weak var delegate: ResizeControlDelegate?
+    var delegate: ResizeControlDelegate?
     var translation = CGPoint.zero
     var startPoint = CGPoint.zero
 

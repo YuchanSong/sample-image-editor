@@ -1,10 +1,8 @@
-
 //
 //  CropRectView.swift
-//  CropViewController
+//  SampleImageEditor
 //
-//  Created by Guilherme Moura on 2/26/16.
-//  Copyright © 2016 Reefactor, Inc. All rights reserved.
+//  Created by ycsong on 2021/11/09.
 //
 
 import UIKit
