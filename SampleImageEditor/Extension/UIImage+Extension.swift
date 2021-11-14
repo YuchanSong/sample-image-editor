@@ -8,17 +8,12 @@
 import UIKit
 
 extension UIImage {
-    func processingImage(_ img: UIImage?, _ croppedRect: CGRect) -> UIImage {
-        if let img = img {
-            let scale = img.scale
-            let cropRect = croppedRect.applying(CGAffineTransform(scaleX: scale, y: scale))
-            
-            if let croppedImage = img.cgImage?.cropping(to: cropRect) {
-                return UIImage(cgImage: croppedImage, scale: self.scale, orientation: img.imageOrientation)
-            }
-        }
-        
-        return self
+    func screenshot(view: UIView) -> UIImage {
+        UIGraphicsBeginImageContext(CGSize(width: view.frame.size.width, height: view.frame.size.height))
+        view.drawHierarchy(in: CGRect(x: 0.0, y: 0.0, width: view.frame.size.width, height: view.frame.size.height), afterScreenUpdates: true)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image ?? self
     }
     
     func rotate(radians: CGFloat) -> UIImage {
