@@ -42,17 +42,21 @@ extension ViewController : UIImagePickerControllerDelegate, UINavigationControll
 
 //MARK: - CropViewController Delegate
 extension ViewController: CropViewControllerDelegate {
-    func cropViewController(didFinishCroppingImage image: UIImage?) {
+    func cropViewController(vc: CropViewController, didFinishCroppingImage image: UIImage?) {
         if let _ = image {
-            DispatchQueue.main.async {
-                self.imageView.image = image
-            }
+            vc.dismiss(animated: false, completion: {
+                DispatchQueue.main.async {
+                    self.imageView.image = image
+                }
+            })
         } else {
             print("이미지 처리에 실패하였습니다 :(")
         }
     }
     
-    func cropViewControllerDidCancel() {
-        print("user canceled")
+    func cropViewControllerDidCancel(vc: CropViewController) {
+        vc.dismiss(animated: false, completion: {
+            print("user canceled")
+        })
     }
 }
