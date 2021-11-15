@@ -8,7 +8,6 @@
 import UIKit
 import CoreData
 
-@available(iOS 13.0, *)
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
