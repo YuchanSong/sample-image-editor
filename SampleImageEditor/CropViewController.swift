@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CropViewControllerDelegate {
+protocol CropViewControllerDelegate: AnyObject {
     func cropViewController(vc: CropViewController, didFinishCroppingImage image: UIImage?)
     func cropViewControllerDidCancel(vc: CropViewController)
 }
@@ -16,7 +16,7 @@ class CropViewController: UIViewController {
     
     private var image: UIImage?
     private var cropView: CropView!
-    private var delegate: CropViewControllerDelegate?
+    private weak var delegate: CropViewControllerDelegate?
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
