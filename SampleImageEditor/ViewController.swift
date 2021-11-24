@@ -32,9 +32,10 @@ class ViewController: UIViewController {
 extension ViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            self.dismiss(animated: false, completion: {
-                let cropVC = CropViewController(delegate: self, image: image)
-                self.present(cropVC, animated: true, completion: nil)
+            self.dismiss(animated: false, completion: { [weak self] in
+                guard let sself = self else { return }
+                let cropVC = CropViewController(delegate: sself, image: image)
+                sself.present(cropVC, animated: true, completion: nil)
             })
         }
     }
@@ -44,9 +45,10 @@ extension ViewController : UIImagePickerControllerDelegate, UINavigationControll
 extension ViewController: CropViewControllerDelegate {
     func cropViewController(vc: CropViewController, didFinishCroppingImage image: UIImage?) {
         if let _ = image {
-            vc.dismiss(animated: false, completion: {
+            vc.dismiss(animated: false, completion: { [weak self] in
+                guard let sself = self else { return }
                 DispatchQueue.main.async {
-                    self.imageView.image = image
+                    sself.imageView.image = image
                 }
             })
         } else {
@@ -55,8 +57,7 @@ extension ViewController: CropViewControllerDelegate {
     }
     
     func cropViewControllerDidCancel(vc: CropViewController) {
-        vc.dismiss(animated: false, completion: {
-            print("user canceled")
-        })
+        vc.dismiss(animated: false, completion: nil)
+        print("user canceled")
     }
 }
